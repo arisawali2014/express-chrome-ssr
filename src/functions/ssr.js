@@ -67,7 +67,7 @@ export async function ssr(url, browserWSEndpoint) {
 			timeout: 25000,
 			waitUntil: 'networkidle2'
 		});
-
+		
 		// Inject <base> on page to relative resources load properly.
 		await page.evaluate(url => {
 			const base = document.createElement('base');
@@ -83,16 +83,16 @@ export async function ssr(url, browserWSEndpoint) {
 		});
 
 		const html = await page.content();
-
+		const cookies = await page.cookies();
 		// Close the page we opened here (not the browser).
 		await page.close();
 
-		return { html, status: response.status() }
+		return { html, status: response.status(),cookies }
 	}
 	catch (e) {
 		const html = e.toString();
 		console.warn({ message: `URL: ${url} Failed with message: ${html}` })
-		return { html, status: 500 }
+		return { html, status: 500 ,cookies:{}}
 	}
 
 };

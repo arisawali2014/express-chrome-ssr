@@ -31,15 +31,16 @@ app.get('/ssr', async (req, res, next) => {
 		return res.status(400).send('Invalid url param: Example: ?url=https://binge.app');
 	}
 
-	// console.time(`URL_START:${url}`)
-	// console.log(`browserWSEndpoint is::${(browserWSEndpoint)}`)
+	console.time(`URL_START:${url}`)
+	console.log(`browserWSEndpoint is::${(browserWSEndpoint)}`)
 	// Spin new instance if we dont have an active one
 	if (!browserWSEndpoint) {
 		const browser = await puppeteer.launch();
 		browserWSEndpoint = await browser.wsEndpoint();
 	}
 
-	const { html, status } = await ssr(url, browserWSEndpoint);
+	const { html, status ,cookies} = await ssr(url, browserWSEndpoint);
 	// console.timeEnd(`URL_START:${url}`)
-	return res.status(status).send(html);
+	console.log(html)
+	return res.status(status).send({html,cookies});
 })
