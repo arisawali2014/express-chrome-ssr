@@ -13,7 +13,7 @@ const params = commandLineArgs([
 ])
 
 const port = params.port || 3000;
-app.listen(port, () => console.log(`I listen on http://localhost:${port}`))
+app.listen(port,'0.0.0.0', () => console.log(`I listen on http://localhost:${port}`))
 
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
