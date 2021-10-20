@@ -45,6 +45,5 @@ app.get('/ssr', async (req, res, next) => {
 
 	const { html, status ,cookies} = await ssr(url, browserWSEndpoint);
 	// console.timeEnd(`URL_START:${url}`)
-	console.log(html)
 	return res.status(status).send({html,cookies});
 })
